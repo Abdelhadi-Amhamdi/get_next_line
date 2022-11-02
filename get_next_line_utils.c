@@ -1,43 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 11:48:57 by aamhamdi          #+#    #+#             */
+/*   Updated: 2022/11/02 11:57:33 by aamhamdi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int ft_str_search(char *data)
+int	ft_str_search(char *data)
 {
-    int index;
+	int	index;
 
-    index = 0;
-    while(data && data[index])
-    {
-        if(data[index] == '\n')
-            return index;
-        index++;
-    }
-    return -1;
+	index = 0;
+	while (data && data[index])
+	{
+		if (data[index] == '\n')
+			return (index);
+		index++;
+	}
+	return (-1);
 }
 
-char *ft_strdup(char *string)
+char	*ft_str_join(char *s1, char *s2)
 {
-    char *p;
-    int index;
-
-    index  = 0;
-    p = malloc((strlen(string) + 1) * sizeof(char));
-    if(!p)
-        return 0;
-    while(string[index])
-    {
-        p[index] = string[index];
-        index++;
-    }
-    p[index] = '\0';
-    return p;
-}
-
-char *ft_str_join(char *s1, char *s2)
-{
-	char *p;
-	int index0;
-	int index1;
+	char	*p;
+	int		index0;
+	int		index1;
 
 	index0 = 0;
 	index1 = 0;
@@ -50,8 +43,7 @@ char *ft_str_join(char *s1, char *s2)
 		return (NULL);
 	p = malloc((strlen(s1) + strlen(s2) + 1) * sizeof(char));
 	if (!p)
-		return NULL;
-
+		return (NULL);
 	while (s1[index0])
 	{
 		p[index0] = s1[index0];
@@ -65,5 +57,5 @@ char *ft_str_join(char *s1, char *s2)
 	}
 	p[index0] = '\0';
 	free(s1);
-	return p;
+	return (p);
 }
