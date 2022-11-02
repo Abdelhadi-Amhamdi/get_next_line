@@ -6,7 +6,7 @@
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:48:57 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/02 11:57:33 by aamhamdi         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:21:20 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ char	*ft_str_join(char *s1, char *s2)
 	index0 = 0;
 	index1 = 0;
 	if (!s1)
-	{
-		s1 = (char *)malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
+		s1 = strdup("");
 	p = malloc((strlen(s1) + strlen(s2) + 1) * sizeof(char));
 	if (!p)
 		return (NULL);

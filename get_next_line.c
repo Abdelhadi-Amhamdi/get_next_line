@@ -6,7 +6,7 @@
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:48:51 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/02 13:48:05 by aamhamdi         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:22:05 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,38 @@
 
 // #define BUFFER_SIZE 42
 
-char *read_file(char *data, int fd)
+char	*read_file(char *data, int fd)
 {
-	char *buffer;
-	int count;
-	int is_new_line = 0;
+	char	*buffer;
+	int		count;
+	int		is_new_line;
 
 	count = 1;
+	is_new_line = 0;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return NULL;
+		return (NULL);
 	while (!is_new_line && count)
 	{
 		count = read(fd, buffer, BUFFER_SIZE);
 		if (count < 1 && !data)
-		{
-			free(buffer);
-			return 0;
-		}
+			return (free(buffer), NULL);
 		else if (!count && data)
-			break;
+			break ;
 		buffer[count] = '\0';
 		data = ft_str_join(data, buffer);
 		if (ft_str_search(data) != -1)
 			is_new_line = 1;
 	}
 	free(buffer);
-	buffer = NULL;
-	return data;
+	return (data);
 }
 
-char *get_line_from_data(char *data)
+char	*get_line_from_data(char *data)
 {
-	int line_index;
-	char *line;
-	size_t size;
+	int		line_index;
+	char	*line;
+	size_t	size;
 
 	line_index = ft_str_search(data);
 	if (line_index == -1)
@@ -63,27 +60,24 @@ char *get_line_from_data(char *data)
 		line = malloc((line_index) * sizeof(char));
 		strlcpy(line, data, line_index);
 	}
-	return line;
+	return (line);
 }
 
-char *update_stock(char *data)
+char	*update_stock(char *data)
 {
-	int i;
-	char *p;
-	int j = 0;
-	int size;
+	int		i;
+	char	*p;
+	int		j;
+	int		size;
 
 	i = ft_str_search(data);
-
+	j = 0;
 	if (i == -1)
-	{
-		free(data);
-		return NULL;
-	}
+		return (free(data), NULL);
 	size = (strlen(data + (i + 1)));
 	p = malloc((size + 1) * sizeof(char));
 	if (!p)
-		return 0;
+		return (0);
 	i++;
 	while (data[i])
 	{
@@ -93,13 +87,13 @@ char *update_stock(char *data)
 	}
 	p[j] = '\0';
 	free(data);
-	return p;
+	return (p);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *data;
-	char *line;
+	static char	*data;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
