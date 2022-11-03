@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 11:48:51 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/03 12:50:47 by aamhamdi         ###   ########.fr       */
+/*   Created: 2022/11/03 11:05:39 by aamhamdi          #+#    #+#             */
+/*   Updated: 2022/11/03 12:51:38 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ char	*update_data(char *data)
 
 char	*get_next_line(int fd)
 {
-	static char	*data;
+	static char	*data[12500];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	data = read_file(data, fd);
-	if (!data || !*data)
+	data[fd] = read_file(data[fd], fd);
+	if (!data[fd] || !*data[fd])
 	{
-		if (data)
-			free(data);
+		if (data[fd])
+			free(data[fd]);
 		return (NULL);
 	}
-	line = get_line_from_data(data);
-	data = update_data(data);
+	line = get_line_from_data(data[fd]);
+	data[fd] = update_data(data[fd]);
 	return (line);
 }
