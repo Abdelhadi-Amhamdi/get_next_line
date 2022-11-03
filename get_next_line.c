@@ -6,7 +6,7 @@
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:48:51 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/02 14:22:05 by aamhamdi         ###   ########.fr       */
+/*   Updated: 2022/11/03 10:32:59 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_line_from_data(char *data)
 	line_index = ft_str_search(data);
 	if (line_index == -1)
 	{
-		size = strlen(data);
+		size = ft_strlen(data);
 		line = malloc((size + 1) * sizeof(char));
 		strlcpy(line, data, size + 1);
 	}
@@ -58,7 +58,7 @@ char	*get_line_from_data(char *data)
 	{
 		line_index += 2;
 		line = malloc((line_index) * sizeof(char));
-		strlcpy(line, data, line_index);
+		ft_strlcpy(line, data, line_index);
 	}
 	return (line);
 }
@@ -74,7 +74,7 @@ char	*update_stock(char *data)
 	j = 0;
 	if (i == -1)
 		return (free(data), NULL);
-	size = (strlen(data + (i + 1)));
+	size = (ft_strlen(data + (i + 1)));
 	p = malloc((size + 1) * sizeof(char));
 	if (!p)
 		return (0);
@@ -111,12 +111,20 @@ char	*get_next_line(int fd)
 
 // int main()
 // {
-// 	int fd = open("test.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
+// 	int fd = open("text.txt", O_RDONLY);
+// 	char *line;
+// 	line = get_next_line(fd);
+
+// 	while(line)
+// 	{
+// 		printf("%s", line);
+// 		line = get_next_line(fd);
+// 	}
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
+// 	// printf("%s", get_next_line(fd));
 // }
