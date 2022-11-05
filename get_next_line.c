@@ -6,7 +6,7 @@
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:48:51 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/03 12:50:47 by aamhamdi         ###   ########.fr       */
+/*   Updated: 2022/11/04 16:18:24 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,80 +14,78 @@
 
 // #define BUFFER_SIZE 42
 
-char	*read_file(char *data, int fd)
+char	*free_all(char *data, char *buffer)
+{
+	free(data);
+	free(buffer);
+	return (NULL);
+}
+
+char	*read_file(int fd, char *data)
 {
 	char	*buffer;
+	int		is_nl;
 	int		count;
-	int		is_new_line;
 
+	is_nl = 0;
 	count = 1;
-	is_new_line = 0;
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	while (!is_new_line && count)
+	while (!is_nl && count > 0)
 	{
 		count = read(fd, buffer, BUFFER_SIZE);
-		if (count < 1 && !data)
+		if (count <= 0 && !data)
 			return (free(buffer), NULL);
-		else if (!count && data)
+		else if (count == 0 && data[0] != '\0')
 			break ;
+		else if (count == -1 && data)
+			return (data = free_all(data, buffer));
 		buffer[count] = '\0';
-		data = ft_str_join(data, buffer);
-		if (ft_str_search(data) != -1)
-			is_new_line = 1;
+		data = ft_join(data, buffer);
+		if (ft_search(data) != -1)
+			is_nl = 1;
 	}
-	free(buffer);
-	return (data);
+	return (free(buffer), data);
 }
 
-char	*get_line_from_data(char *data)
+char	*get_line_from_data(const char *data)
 {
-	int		line_index;
 	char	*line;
-	size_t	size;
+	int		nl_index;
 
-	line_index = ft_str_search(data);
-	if (line_index == -1)
+	nl_index = ft_search(data);
+	if (nl_index != -1)
 	{
-		size = ft_strlen(data);
-		line = malloc((size + 1) * sizeof(char));
-		strlcpy(line, data, size + 1);
+		line = malloc(nl_index + 2 * sizeof(char));
+		if (!line)
+			return (NULL);
+		strlcpy(line, data, nl_index + 2);
 	}
 	else
-	{
-		line_index += 2;
-		line = malloc((line_index) * sizeof(char));
-		ft_strlcpy(line, data, line_index);
-	}
+		line = ft_strdup(data);
 	return (line);
 }
 
-char	*update_data(char *data)
+char	*update_data(const char *data)
 {
-	int		n_index;
-	char	*p;
-	int		index;
+	char	*new_data;
+	int		nl_index;
 	int		size;
 
-	n_index = ft_str_search(data);
-	index = 0;
-	if (n_index == -1)
-		return (free(data), NULL);
-	size = (ft_strlen(data + (n_index + 1)));
-	p = malloc((size + 1) * sizeof(char));
-	if (!p)
-		return (0);
-	n_index++;
-	while (data[n_index])
+	nl_index = ft_search(data);
+	if (nl_index != -1)
 	{
-		p[index] = data[n_index];
-		index++;
-		n_index++;
+		size = strlen(data + nl_index + 1);
+		new_data = malloc(size + 1 * sizeof(char));
+		if (!new_data)
+			return (NULL);
+		strlcpy(new_data, data + (nl_index + 1), size + 1);
 	}
-	p[index] = '\0';
-	free(data);
-	return (p);
+	else
+		new_data = NULL;
+	free((char *)data);
+	return (new_data);
 }
 
 char	*get_next_line(int fd)
@@ -97,7 +95,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	data = read_file(data, fd);
+	data = read_file(fd, data);
 	if (!data || !*data)
 	{
 		if (data)

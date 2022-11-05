@@ -6,25 +6,11 @@
 /*   By: aamhamdi <aamhamdi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:06:36 by aamhamdi          #+#    #+#             */
-/*   Updated: 2022/11/03 12:51:20 by aamhamdi         ###   ########.fr       */
+/*   Updated: 2022/11/03 20:09:09 by aamhamdi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
-int	ft_str_search(char *data)
-{
-	int	index;
-
-	index = 0;
-	while (data && data[index])
-	{
-		if (data[index] == '\n')
-			return (index);
-		index++;
-	}
-	return (-1);
-}
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *src)
 {
@@ -54,46 +40,50 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 	return (size);
 }
 
-char	*ft_strdup(char *string)
+int	ft_search(const char *data)
+{
+	int	index;
+
+	index = 0;
+	while (data[index])
+	{
+		if (data[index] == '\n')
+			return (index);
+		index++;
+	}
+	return (-1);
+}
+
+char	*ft_strdup(const char *string)
 {
 	size_t	size;
 	char	*p;
 
 	if (!string)
 		return (NULL);
-	size = ft_strlen(string);
-	p = malloc(size + 1 * sizeof(char));
+	size = strlen(string) + 1;
+	p = malloc(size * sizeof(char));
 	if (!p)
 		return (NULL);
-	ft_strlcpy(p, string, size + 1);
+	strlcpy(p, string, size);
 	return (p);
 }
 
-char	*ft_str_join(char *s1, char *s2)
+char	*ft_join(char *data, const char *buffer)
 {
-	char	*p;
-	int		index0;
-	int		index1;
+	char	*new_data;
+	size_t	s1_s;
+	size_t	s2_s;
 
-	index0 = 0;
-	index1 = 0;
-	if (!s1)
-		s1 = ft_strdup("");
-	p = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!p)
+	if (!data)
+		data = ft_strdup("");
+	s1_s = strlen(data);
+	s2_s = strlen(buffer);
+	new_data = malloc((s1_s + s2_s + 1) * sizeof(char));
+	if (!new_data)
 		return (NULL);
-	while (s1[index0])
-	{
-		p[index0] = s1[index0];
-		index0++;
-	}
-	while (s2[index1])
-	{
-		p[index0] = s2[index1];
-		index0++;
-		index1++;
-	}
-	p[index0] = '\0';
-	free(s1);
-	return (p);
+	strlcpy(new_data, data, s1_s + 1);
+	strlcpy(new_data + s1_s, buffer, s2_s + 1);
+	free(data);
+	return (new_data);
 }
