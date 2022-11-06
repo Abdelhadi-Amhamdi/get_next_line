@@ -60,7 +60,7 @@ char	*get_line_from_data(const char *data)
 		line = malloc(nl_index + 2 * sizeof(char));
 		if (!line)
 			return (NULL);
-		strlcpy(line, data, nl_index + 2);
+		ft_strlcpy(line, data, nl_index + 2);
 	}
 	else
 		line = ft_strdup(data);
@@ -76,11 +76,11 @@ char	*update_data(const char *data)
 	nl_index = ft_search(data);
 	if (nl_index != -1)
 	{
-		size = strlen(data + nl_index + 1);
+		size = ft_strlen(data + nl_index + 1);
 		new_data = malloc(size + 1 * sizeof(char));
 		if (!new_data)
 			return (NULL);
-		strlcpy(new_data, data + (nl_index + 1), size + 1);
+		ft_strlcpy(new_data, data + (nl_index + 1), size + 1);
 	}
 	else
 		new_data = NULL;

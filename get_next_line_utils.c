@@ -61,11 +61,11 @@ char	*ft_strdup(const char *string)
 
 	if (!string)
 		return (NULL);
-	size = strlen(string) + 1;
+	size = ft_strlen(string) + 1;
 	p = malloc(size * sizeof(char));
 	if (!p)
 		return (NULL);
-	strlcpy(p, string, size);
+	ft_strlcpy(p, string, size);
 	return (p);
 }
 
@@ -77,13 +77,13 @@ char	*ft_join(char *data, const char *buffer)
 
 	if (!data)
 		data = ft_strdup("");
-	s1_s = strlen(data);
-	s2_s = strlen(buffer);
+	s1_s = ft_strlen(data);
+	s2_s = ft_strlen(buffer);
 	new_data = malloc((s1_s + s2_s + 1) * sizeof(char));
 	if (!new_data)
 		return (NULL);
-	strlcpy(new_data, data, s1_s + 1);
-	strlcpy(new_data + s1_s, buffer, s2_s + 1);
+	ft_strlcpy(new_data, data, s1_s + 1);
+	ft_strlcpy(new_data + s1_s, buffer, s2_s + 1);
 	free(data);
 	return (new_data);
 }

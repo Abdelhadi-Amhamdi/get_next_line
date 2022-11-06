@@ -17,6 +17,8 @@
 char	*ft_join(char *s1, const char *s2);
 int		ft_search(const char *data);
 char	*get_next_line(int fd);
+size_t	ft_strlen(const char *src);
 char	*ft_strdup(const char *string);
+size_t	ft_strlcpy(char *dst, const char *src, size_t len);
 
 #endif
